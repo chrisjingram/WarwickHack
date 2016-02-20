@@ -2,7 +2,6 @@ var categories = require("./categories.js");
 var fuzzy = require("fuzzy");
 
 module.exports = function(str){
-  console.log(str);
   return fuzzy
     .filter(str, categories)
     .sort(function(a, b){
@@ -14,4 +13,4 @@ module.exports = function(str){
 };
 
 //test
-console.log(module.exports("food"));
+//console.log(module.exports("food"));

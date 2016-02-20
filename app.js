@@ -13,11 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "10000000"}));
 
 // routes
 var mainRoutes = require("./routes/main.js");
-<<<<<<< HEAD
 var searchRoutes = require("./routes/search.js");
-=======
 var classAPIRoutes = require("./routes/api/class.js");
->>>>>>> 2a1f8670da511601d65e4b0f8986ed6d61a387fc
 
 app.use("/public", express.static(path.join(__dirname, '/views/public')));
 app.use("/search", searchRoutes);
