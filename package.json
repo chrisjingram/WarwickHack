@@ -1,0 +1,31 @@
+{
+  "name": "WarwickHack",
+  "version": "0.0.1",
+  "description": "Training app for text classification",
+  "author": "Chris Ingram <chris@chrisingram.me>",
+  "contributors": [
+    {
+      "name": "Chris Ingram",
+      "email": "chris@chrisingram.me"
+    },
+    {
+      "name": "Matt Burman",
+      "email": "matt@mattburman.com"
+    },
+    {
+      "name": "Daniel Carl Jones",
+      "email": ""
+    },
+    {
+      "name": "Chris McIntyre",
+      "email": ""
+    }
+  ],
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "moment": "^2.11.2",
+    "morgan": "^1.7.0"
+  }
+}
