@@ -1,0 +1,23 @@
+{
+  "name": "WarwickHackViews",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "cd public && wzrd ../src/app.jsx:js/build.js",
+    "build": "browserify -t reactify src/app.jsx -o public/js/build.js"
+  },
+  "dependencies": {
+    "browserify": "^12.0.1",
+    "minimist": "^1.2.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "reactify": "^1.1.1",
+    "wzrd": "^1.3.1"
+  },
+  "author": "Chris Ingram",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
