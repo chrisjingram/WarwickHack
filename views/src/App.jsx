@@ -1,10 +1,28 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var App = React.createClass({
+var DocumentBox = React.createClass({
 	render: function(){
-		return (<div>hello world react</div>)
+		return (<div class="documentBox">
+				<Document text={ this.props.docText } />
+				</div>);
 	}
 });
 
-ReactDOM.render(<App />, document.getElementById('mountPoint'));
+var Document = React.createClass({
+	render: function() {
+		return (<p>{ this.props.text }</p>);
+	}
+});
+
+var ChoiceButton = React.createClass({
+	// Unimplemented class to represent 'no' and 'yes' buttons
+	render: function() {
+		return ();
+	}
+});
+
+ReactDOM.render(<DocumentBox docText="test"/>, document.getElementById('mountPoint'));
+		return (<div>hello worldd reactt {this.props.name}</div>)
+	}
+});
