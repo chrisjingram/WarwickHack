@@ -3,8 +3,8 @@ var ReactDOM = require('react-dom');
 
 var App = React.createClass({
 	render: function(){
-		return (<div>hello world react</div>)
+		return (<div>hello worldd reactt {this.props.name}</div>)
 	}
 });
 
-ReactDOM.render(<App />, document.getElementById('mountPoint'));
+ReactDOM.render(<App name="Chris" />, document.getElementById('mountPoint'));
