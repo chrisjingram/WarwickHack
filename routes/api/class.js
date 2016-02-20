@@ -19,4 +19,12 @@ router.get('/:name', function(req, res, next){
 	});
 });
 
+router.get('/id/:classid', function(req, res, next){
+	var name = req.params.classid;
+	classDB.getClassName(name, function(err, className){
+		if(err) return res.status(500).json({error: err});
+		return res.status(200).json({success: true, data: className});
+	});
+});
+
 module.exports = router;

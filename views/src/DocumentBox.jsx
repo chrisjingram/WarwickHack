@@ -47,6 +47,12 @@ var DocumentBox = React.createClass({
 	},
 	componentDidMount: function(){
 		this.newDoc();
+		api.getClassName(this.props.classId, function(err, className){
+			if(err) return console.log(err);
+			this.setState({
+				className: className
+			})
+		}.bind(this));
 	},
 	render: function(){
 		return (<div className="main container" onSwipe={this.handleSwipe}>

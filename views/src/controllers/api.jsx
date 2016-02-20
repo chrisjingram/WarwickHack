@@ -18,3 +18,13 @@ module.exports.updateYes = function(docId, userId, callback){
 module.exports.updateNo = function(docId, userId, callback){
 	return callback(null, true);
 }
+
+module.exports.getClassName = function(classId, callback){
+	jquery.get('/class/id/' + classId, function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	});
+}
