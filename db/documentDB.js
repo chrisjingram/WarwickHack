@@ -34,7 +34,16 @@ module.exports.random = function(classId, callback){
 	Document.findOne(query, function(err, doc){
 		console.log(doc);
 		if(err) return callback(err);
-		return callback(null, doc);
+		if(doc == null){
+			query.randomNumber = {$lte: random}
+			Document.findOne(query, function(err2, doc2){
+				if(err2) return callback(err2);
+				return callback(null,doc2);
+			})
+		}else{
+			return callback(null, doc);
+		}
+
 	});
 
 }
