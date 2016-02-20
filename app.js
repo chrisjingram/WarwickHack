@@ -11,8 +11,10 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "10000000"}));
 
 // routes
 var mainRoutes = require("./routes/main.js");
+var searchRoutes = require("./routes/search.js");
 
 app.use("/public", express.static(path.join(__dirname, '/views/public')));
+app.use("/search", searchRoutes);
 app.use("/", mainRoutes);
 
 // catch 404 and forward to error handler
