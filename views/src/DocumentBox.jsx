@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 var Document = require('./Document.jsx');
 var ChoiceButton = require('./ChoiceButton.jsx');
 var ClassName = require('./ClassName.jsx');
+var Hammer = require('react-hammerjs');
 
 var api = require("./controllers/api.jsx");
 
@@ -41,11 +42,14 @@ var DocumentBox = React.createClass({
 			return this.newDoc();
 		}.bind(this));
 	},
+	handleSwipe: function(ev){
+		console.log(ev.type);
+	},
 	componentDidMount: function(){
 		this.newDoc();
 	},
 	render: function(){
-		return (<div className="main container">
+		return (<div className="main container" onSwipe={this.handleSwipe}>
 					<ClassName name={this.props.className} />
 					<Document docText={ this.state.docText } />
 					<div className="buttons">
