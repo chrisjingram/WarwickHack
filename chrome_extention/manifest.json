@@ -7,17 +7,27 @@
 
   "browser_action": {
     "default_icon": "icon_19.png",
-    "default_popup": "popup.html",
+    "default_popup": "popup_selection.html",
     "default_title": "Dank memes!"
   },
-  "permissions": [
-    "activeTab",
-    "contextMenus",
-    "https://ajax.googleapis.com/"
-  ],
+
   "background": {
-    "scripts": []
+    "persistent": false,
+    "scripts": ["background.js"]
   },
+
+  "permissions": [
+    "tabs",
+    "<all_urls>"
+  ],
+
+  "content_scripts": [{
+    "matches":    ["<all_urls>"],
+    "js":         ["content.js"],
+    "run_at":     "document_start",
+    "all_frames": false
+  }],
+
   "icons": {
     "16": "icon_19.png",
     "48": "icon_19.png",
