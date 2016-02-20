@@ -19,22 +19,26 @@ function pasteSelection() {
 }
 
 function updateDatalist() {
-	var input = $('#classifier').val;
+	var input = $('#classifier').val();
 	// go query matt's db
-	var results = ['food', 'car', 'truck', 'animal', 'furniture', 'computer'];
-	var dataList = $('#suggestions');
-	dataList.html("");
-	for (var i = 0; i < results.length; i++) {
-		dataList.append("<option>" + results[i]);
-	}
+	console.log(input);
+	$.ajax({
+		method: "GET",
+		url: "http://188.166.154.40:5678/search/categories",
+		headers: { query: input }
+	}).done(function( msg ) {
+		var results = msg;
+		console.log(results);
+		var dataList = $('.suggestions');
+		dataList.html("");
+		for (var i = 0; i < results.length; i++) {
+			dataList.append("<div class='col-xs-3 col-sm-2'><button type='button' class='btn btn-primary'>" + results[i] + "</button></div>");
+		}
+  	});
 }
 
-$.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
-  $(".js-example-matcher-start").select2({
-    matcher: function () { updateDatalist() }
-  })
+$('#classifier').on("input", function () {
+	updateDatalist();
 });
-
-$(".select-2").select2();
 
 pasteSelection();
