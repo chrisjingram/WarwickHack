@@ -5,15 +5,19 @@ var bodyParser = require("body-parser");
 
 var app = express();
 
+require("./db/initMongo.js")(); // init db
+
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true, limit: "10000000"}));
 
 // routes
 var mainRoutes = require("./routes/main.js");
+var classAPIRoutes = require("./routes/api/class.js");
 
 app.use("/public", express.static(path.join(__dirname, '/views/public')));
 app.use("/", mainRoutes);
+app.use("/class", classAPIRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

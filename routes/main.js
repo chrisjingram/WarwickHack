@@ -3,7 +3,6 @@ var router = express.Router();
 var path = require("path");
 
 router.get('/', function(req, res, next){
-	// res.send('hello');
 	res.sendFile(path.join(__dirname+'/../views/public/index.html'));
 });
 
