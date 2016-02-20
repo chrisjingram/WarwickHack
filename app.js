@@ -14,10 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "10000000"}));
 // routes
 var mainRoutes = require("./routes/main.js");
 var classAPIRoutes = require("./routes/api/class.js");
+var documentAPIRoutes = require("./routes/api/document.js");
 
 app.use("/public", express.static(path.join(__dirname, '/views/public')));
 app.use("/", mainRoutes);
 app.use("/class", classAPIRoutes);
+app.use("/document", documentAPIRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

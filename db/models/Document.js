@@ -3,10 +3,6 @@ var mongoose = require("mongoose");
 module.exports = mongoose.model(
   "Document",
   new mongoose.Schema({
-    _id: {
-      required: true,
-      type: String
-    },
     docText: {
       type: String,
       required: true
@@ -14,6 +10,21 @@ module.exports = mongoose.model(
     classId: {
       type: String,
       required: true
+    },
+    randomNumber: {
+      type: Number,
+      default: function() {
+        return Math.random()
+      },
+      index: true
+    },
+    yes: {
+      type: Number,
+      default: 0
+    },
+    no: {
+      type: Number,
+      default: 0
     }
   })
 );
