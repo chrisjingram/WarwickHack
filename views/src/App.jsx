@@ -1,10 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var DocumentBox = require('./DocumentBox.jsx');
 
-var App = React.createClass({
-	render: function(){
-		return (<div>hello worldd reactt {this.props.name}</div>)
+var ChoiceButton = React.createClass({
+	// Unimplemented class to represent 'no' and 'yes' buttons
+	render: function() {
+		return <p>button test</p>;
 	}
 });
 
-ReactDOM.render(<App name="Chris" />, document.getElementById('mountPoint'));
+ReactDOM.render(<DocumentBox docText="test"/>,
+                document.getElementById('mountPoint'));
