@@ -43,10 +43,16 @@ var DocumentBox = React.createClass({
 	},
 	componentDidMount: function(){
 		this.newDoc();
+		api.getClassName(this.props.classId, function(err, className){
+			if(err) return console.log(err);
+			this.setState({
+				className: className
+			})
+		}.bind(this));
 	},
 	render: function(){
 		return (<div className="main container">
-					<ClassName name={this.props.className} />
+					<ClassName name={this.state.className} />
 					<Document docText={ this.state.docText } />
 					<div className="buttons">
 						<button className="yesnobutton no" onClick={this.handleNo}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>

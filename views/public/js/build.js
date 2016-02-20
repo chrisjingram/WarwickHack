@@ -28880,10 +28880,16 @@ var DocumentBox = React.createClass({displayName: "DocumentBox",
 	},
 	componentDidMount: function(){
 		this.newDoc();
+		api.getClassName(this.props.classId, function(err, className){
+			if(err) return console.log(err);
+			this.setState({
+				className: className
+			})
+		}.bind(this));
 	},
 	render: function(){
 		return (React.createElement("div", {className: "main container"}, 
-					React.createElement(ClassName, {name: this.props.className}), 
+					React.createElement(ClassName, {name: this.state.className}), 
 					React.createElement(Document, {docText:  this.state.docText}), 
 					React.createElement("div", {className: "buttons"}, 
 						React.createElement("button", {className: "yesnobutton no", onClick: this.handleNo}, React.createElement("span", {className: "glyphicon glyphicon-remove", "aria-hidden": "true"})), 
@@ -28917,6 +28923,16 @@ module.exports.updateYes = function(docId, userId, callback){
 
 module.exports.updateNo = function(docId, userId, callback){
 	return callback(null, true);
+}
+
+module.exports.getClassName = function(classId, callback){
+	jquery.get('/class/id/' + classId, function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	});
 }
 
 },{"jquery":1}],165:[function(require,module,exports){
