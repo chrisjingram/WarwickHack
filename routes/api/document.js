@@ -28,4 +28,12 @@ router.get('/random/:classId?', function(req, res, next){
 
 })
 
+router.get('/all/:className?', function(req, res, next){
+	var className = req.params.className || null
+	documentDB.all(className, function(err, documents){
+		if(err) return res.status(500).json({error: err});
+		return res.status(200).json({success: true, data: documents});
+	})
+});
+
 module.exports = router;

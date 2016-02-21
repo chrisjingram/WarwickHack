@@ -48,6 +48,16 @@ module.exports.random = function(classId, callback){
 
 };
 
+module.exports.all = function(className, callback){
+	var query = {}
+	if(className) query.className = className;
+
+	Document.find(query, function(err, documents){
+		if(err) return callback(err);
+		return callback(null, documents);
+	})
+}
+
 var percentYes = function(doc){
   return doc.yeses/(doc.yeses+doc.nos);
 };

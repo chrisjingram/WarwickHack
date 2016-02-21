@@ -22,6 +22,11 @@ var DocumentBox = React.createClass({
 	},
 	newDoc: function(){
 		if(this.state.classId){
+			var random = Math.random();
+			classId = null;
+			if(random > 0.5){
+				classId = this.state.classId;
+			}
 			api.getRandomDoc(this.state.classId, function(err,result){
 				if(err) return console.log(err);
 				console.log(result.data);

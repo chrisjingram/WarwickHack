@@ -26,6 +26,13 @@ router.get('/name/:name', function(req, res, next){
 	});
 });
 
+router.get('/all', function(req, res, next){
+	classDB.findAll(function(err, classes){
+		if(err) return res.status(500).json({error: err});
+		return res.status(200).json({success: true, data: classes});
+	});
+});
+
 router.get('/id/:classid', function(req, res, next){
 	var name = req.params.classid;
 	classDB.getClassName(name, function(err, className){
