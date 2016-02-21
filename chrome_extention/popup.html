@@ -22,16 +22,21 @@
 
 <body>
   <div class="container text-center">
-    <div class="row" id="without_selection">
+    <div class="row" id="without_selection" class="hidden">
       <div class="col-lg-12">
         <p>Please make a selection to classify!</p>
+      </div>
+    </div>
+    <div class="row" id="completed" class="hidden">
+      <div class="col-lg-12">
+        <p>Thanks! Your classification was submitted.</p>
       </div>
     </div>
     <div id="with_selection" class="hidden">
       <div class="row">
         <div class="col-lg-12">
           <p>What classification is "<em><span id="selection"></span></em>"?</p>
-          <input id="classifier" type="text" placeholder="banter">
+          <input id="classifier" type="text" placeholder="Category..." autofocus>
 
 
         </div>
