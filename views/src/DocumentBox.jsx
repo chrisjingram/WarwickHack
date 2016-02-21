@@ -40,14 +40,15 @@ var DocumentBox = React.createClass({
 		
 	},
 	handleYes: function(){
-		console.log("docId",this.state.docId);
-		api.updateYes(this.state.docId, 'testuser', function(err, result){
-			if(err) console.log("ERROR %%%",err);
+		var userid = Math.random().toString(36).substr(2, 5);
+		api.updateYes(this.state.docId, userid, function(err, result){
+			if(err) console.log(err);
 			return this.newDoc();
 		}.bind(this));
 	},
 	handleNo: function(){
-		api.updateNo(this.state.docId, 'testuser', function(err, result){
+		var userid = Math.random().toString(36).substr(2, 5);
+		api.updateNo(this.state.docId, userid, function(err, result){
 			if(err) console.log(err);
 			return this.newDoc();
 		}.bind(this));
