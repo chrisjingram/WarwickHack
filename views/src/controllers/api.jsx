@@ -14,11 +14,37 @@ module.exports.getRandomDoc = function(classId, callback){
 }
 
 module.exports.updateYes = function(docId, userId, callback){
-	return callback(null, true);
+	jquery.ajax({
+		type: "POST",
+		url: "/document/yes",
+		contentType: "application/json; charset=UTF-8",
+		data: {
+			documentId: docId,
+			userId: userId
+		}
+		}).done(function(result){
+			if(result.error){
+				console.log(result.error);
+			}
+			return callback(null, result);
+		});
 }
 
 module.exports.updateNo = function(docId, userId, callback){
-	return callback(null, true);
+	jquery.ajax({
+		type: "POST",
+		url: "/document/no",
+		contentType: "application/json; charset=UTF-8",
+		data: {
+			documentId: docId,
+			userId: userId
+		}
+		}).done(function(result){
+			if(result.error){
+				console.log(result.error);
+			}
+			return callback(null, result);
+		});
 }
 
 module.exports.getClassName = function(classId, callback){

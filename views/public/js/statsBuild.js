@@ -28775,7 +28775,9 @@ var jquery = require("jquery");
 
 module.exports.getRandomDoc = function(classId, callback){
 	// 56c87e22fd852b1159637be7 is food
+	console.log("className", classId);
 	jquery.get('/document/random/' + classId, function(result){
+		console.log(result);
 		if(result.error){
 			return callback(result.error);
 		}else{
@@ -28785,11 +28787,37 @@ module.exports.getRandomDoc = function(classId, callback){
 }
 
 module.exports.updateYes = function(docId, userId, callback){
-	return callback(null, true);
+	jquery.ajax({
+		type: "POST",
+		url: "/document/yes",
+		contentType: "application/json; charset=UTF-8",
+		data: {
+			documentId: docId,
+			userId: userId
+		}
+		}).done(function(result){
+			if(result.error){
+				console.log(result.error);
+			}
+			return callback(null, result);
+		});
 }
 
 module.exports.updateNo = function(docId, userId, callback){
-	return callback(null, true);
+	jquery.ajax({
+		type: "POST",
+		url: "/document/no",
+		contentType: "application/json; charset=UTF-8",
+		data: {
+			documentId: docId,
+			userId: userId
+		}
+		}).done(function(result){
+			if(result.error){
+				console.log(result.error);
+			}
+			return callback(null, result);
+		});
 }
 
 module.exports.getClassName = function(classId, callback){
@@ -28844,7 +28872,9 @@ var api = require("../src/controllers/api.jsx");
 
 var App = React.createClass({displayName: "App",
 	getInitialState: function(){
-		return {}
+		return {
+			documents: []
+		}
 	},
 	componentDidMount: function(){
 		api.getDocumentsForClass('food',function(err,data){
@@ -28855,9 +28885,28 @@ var App = React.createClass({displayName: "App",
 		}.bind(this));
 	},
 	render: function(){
-		var string = JSON.stringify(this.state.documents);
+		var trs = []
+
+		this.state.documents.forEach(function(doc, i){
+			trs.push((React.createElement("tr", {key: i}, 
+				React.createElement("td", null, doc.className), 
+				React.createElement("td", null, doc.docText), 
+				React.createElement("td", null, doc.yeses.length), 
+				React.createElement("td", null, doc.nos.length)
+				)));
+		});
 		
-		return (React.createElement("table", {class: "table"}, string));
+		return (React.createElement("table", {className: "table table-bordered"}, 
+			React.createElement("thead", null, 
+				React.createElement("tr", null, 
+					React.createElement("td", null, "Class Name"), 
+					React.createElement("td", null, "Document"), 
+					React.createElement("td", null, "Correct"), 
+					React.createElement("td", null, "Incorrect")
+				)
+			), 
+			React.createElement("tbody", null, trs)
+			));
 	}
 });
 

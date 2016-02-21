@@ -32,13 +32,14 @@ router.get('/random/:className?', function(req, res, next){
 });
 
 router.post('/yes', function(req, res){
-  documentDB.addYes(req.body.documentId, req.body.userId, function(err){
+	console.log("YES REQUEST");
+  documentDB.addYes(req.body.documentId, req.body.userId, function(err, result){
     if(err) return res.status(500).json({success: false});
     return res.status(200).json({success: true});
   });
 });
 router.post('/no', function(req, res){
-  documentDB.addNo(req.body.documentId, req.body.userId, function(err){
+  documentDB.addNo(req.body.documentId, req.body.userId, function(err, result){
     if(err) return res.status(500).json({success: false});
     return res.status(200).json({success: true});
   });

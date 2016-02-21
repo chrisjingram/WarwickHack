@@ -39,14 +39,15 @@ var DocumentBox = React.createClass({
 		
 	},
 	handleYes: function(){
+		console.log("docId",this.state.docId);
 		api.updateYes(this.state.docId, 'testuser', function(err, result){
-			if(err) return console.log(err);
+			if(err) console.log("ERROR %%%",err);
 			return this.newDoc();
 		}.bind(this));
 	},
 	handleNo: function(){
 		api.updateNo(this.state.docId, 'testuser', function(err, result){
-			if(err) return console.log(err);
+			if(err) console.log(err);
 			return this.newDoc();
 		}.bind(this));
 	},

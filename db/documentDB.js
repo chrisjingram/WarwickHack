@@ -81,8 +81,8 @@ module.exports.addYes = function(documentId, userId, callback){
       {$addToSet: {"yeses": userId}},
       {returnNewDocument: true},
       function(err, doc){
-        if(!err) callback({success:true});
-        else callback({success:false});
+        if(!err) return callback(null,{success:true});
+        else return callback({success:false});
         /*
         if(err || !doc) callback(err);
         else if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
@@ -103,9 +103,9 @@ module.exports.addNo = function(documentId, userId, callback){
       {returnNewDocument: true},
       function(err, doc){
         if(!err) {
-          callback({success: true});
+          return callback(null,{success: true});
         } else {
-          callback({success:false});
+          return callback({success:false});
         }
       }
   );

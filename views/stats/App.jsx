@@ -5,7 +5,9 @@ var api = require("../src/controllers/api.jsx");
 
 var App = React.createClass({
 	getInitialState: function(){
-		return {}
+		return {
+			documents: []
+		}
 	},
 	componentDidMount: function(){
 		api.getDocumentsForClass('food',function(err,data){
@@ -16,9 +18,28 @@ var App = React.createClass({
 		}.bind(this));
 	},
 	render: function(){
-		var string = JSON.stringify(this.state.documents);
+		var trs = []
+
+		this.state.documents.forEach(function(doc, i){
+			trs.push((<tr key={i}>
+				<td>{doc.className}</td>
+				<td>{doc.docText}</td>
+				<td>{doc.yeses.length}</td>
+				<td>{doc.nos.length}</td>
+				</tr>));
+		});
 		
-		return (<table class="table">{string}</table>);
+		return (<table className="table table-bordered">
+			<thead>
+				<tr>
+					<td>Class Name</td>
+					<td>Document</td>
+					<td>Correct</td>
+					<td>Incorrect</td>
+				</tr>
+			</thead>
+			<tbody>{trs}</tbody>
+			</table>);
 	}
 });
 
