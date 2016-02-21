@@ -18,10 +18,20 @@ module.exports.find = function(name, callback){
 }
 
 module.exports.getClassName = function(classId, callback){
-	var obj = {_id: classId};
+	var obj = {}
+	if(classId){
+		obj = {_id: classId};
+	}
 	Class.findOne(obj, function(err, className){
 		if(err) return callback("mongo error: " + err);
 		console.log(className.name);
 		return callback(null, className.name);
+	})
+}
+
+module.exports.getFirstClassId = function(callback){
+	Class.findOne(function(err, data){
+		if(err) return callback("mongo error:" + err);
+		return callback(null, data)
 	})
 }

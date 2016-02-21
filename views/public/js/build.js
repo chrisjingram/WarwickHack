@@ -28775,15 +28775,33 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var DocumentBox = require('./DocumentBox.jsx');
 
+var api = require('./controllers/api.jsx');
+
 var App = React.createClass({displayName: "App",
+	getInitialState: function(){
+		return {
+			classId: null,
+			className: null
+		}
+	},
+	componentDidMount: function(){
+		api.getFirstClassId(function(err, classy){
+			if(err) return console.log(err);
+			console.log(classy);
+			this.setState({
+				classId: classy._id,
+				className: classy.name
+			})
+		}.bind(this));
+	},
 	render: function(){
-		return (React.createElement(DocumentBox, {docText: "test"})) // add classId prop
+		return (React.createElement(DocumentBox, {docText: "test", classId: this.state.classId, className: this.state.className})) // add classId prop
 	}
 });
 
 ReactDOM.render(React.createElement(App, null), document.getElementById('mountPoint'));
 
-},{"./DocumentBox.jsx":163,"react":158,"react-dom":2}],160:[function(require,module,exports){
+},{"./DocumentBox.jsx":163,"./controllers/api.jsx":164,"react":158,"react-dom":2}],160:[function(require,module,exports){
 // Document textual information
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -28849,12 +28867,12 @@ var DocumentBox = React.createClass({displayName: "DocumentBox",
 		return {
 			docId: null,
 			docText: null,
-			className: null
 		}
 	},
 	getDefaultProps: function(){
 		return {
-			classId: "56c87e22fd852b1159637be7"
+			classId: "56c87e22fd852b1159637be7",
+			className: "food"
 		}
 	},
 	newDoc: function(){
@@ -28880,16 +28898,16 @@ var DocumentBox = React.createClass({displayName: "DocumentBox",
 	},
 	componentDidMount: function(){
 		this.newDoc();
-		api.getClassName(this.props.classId, function(err, className){
-			if(err) return console.log(err);
-			this.setState({
-				className: className
-			})
-		}.bind(this));
+		// api.getClassName(this.props.classId, function(err, className){
+		// 	if(err) return console.log(err);
+		// 	this.setState({
+		// 		className: className
+		// 	})
+		// }.bind(this));
 	},
 	render: function(){
 		return (React.createElement("div", {className: "main container"}, 
-					React.createElement(ClassName, {name: this.state.className}), 
+					React.createElement(ClassName, {name: this.props.className}), 
 					React.createElement(Document, {docText:  this.state.docText}), 
 					React.createElement("div", {className: "buttons"}, 
 						React.createElement("button", {className: "yesnobutton no", onClick: this.handleNo}, React.createElement("span", {className: "glyphicon glyphicon-remove", "aria-hidden": "true"})), 
@@ -28926,13 +28944,27 @@ module.exports.updateNo = function(docId, userId, callback){
 }
 
 module.exports.getClassName = function(classId, callback){
-	jquery.get('/class/id/' + classId, function(result){
+	var path = '/class/id/';
+	if(classId){
+		path = path + classId;
+	}
+	jquery.get(path, function(result){
 		if(result.error){
 			return callback(result.error);
 		}else{
 			return callback(null, result.data);
 		}
 	});
+}
+
+module.exports.getFirstClassId = function(callback){
+	jquery.get('/class/first', function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	})
 }
 
 },{"jquery":1}],165:[function(require,module,exports){

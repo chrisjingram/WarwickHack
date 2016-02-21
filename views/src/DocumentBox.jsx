@@ -12,12 +12,12 @@ var DocumentBox = React.createClass({
 		return {
 			docId: null,
 			docText: null,
-			className: null
 		}
 	},
 	getDefaultProps: function(){
 		return {
-			classId: "56c87e22fd852b1159637be7"
+			classId: "56c87e22fd852b1159637be7",
+			className: "food"
 		}
 	},
 	newDoc: function(){
@@ -43,16 +43,16 @@ var DocumentBox = React.createClass({
 	},
 	componentDidMount: function(){
 		this.newDoc();
-		api.getClassName(this.props.classId, function(err, className){
-			if(err) return console.log(err);
-			this.setState({
-				className: className
-			})
-		}.bind(this));
+		// api.getClassName(this.props.classId, function(err, className){
+		// 	if(err) return console.log(err);
+		// 	this.setState({
+		// 		className: className
+		// 	})
+		// }.bind(this));
 	},
 	render: function(){
 		return (<div className="main container">
-					<ClassName name={this.state.className} />
+					<ClassName name={this.props.className} />
 					<Document docText={ this.state.docText } />
 					<div className="buttons">
 						<button className="yesnobutton no" onClick={this.handleNo}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
