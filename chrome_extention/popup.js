@@ -34,21 +34,25 @@ function updateDatalist() {
 		dataList.html("");
     console.log(results);
 		for (var i = 0; i < results.length; i++) {
-			dataList.append("<div class='col-xs-3 col-sm-2'><button type='button' onClick=submitData(" + results[i] + ", " + selection + ") class='btn btn-primary'>" + results[i] + "</button></div>");
+			dataList.append("<div class='col-xs-3 col-sm-2 classifier-btn'><button data-classifier='" + results[i] + "' type='button' class='btn btn-primary'>" + results[i] + "</button></div>");
 		}
+      $('.classifier-btn button').click(function () {
+        classifier = $(this).attr('data-classifier');
+        submitData(classifier, selection);
+      });
   	});
 }
 
 function submitData(className, docText) {
-  jquery.post('/document/', {
-   "className": className,
-   "docText": docText
+  $.ajax({
+    method: "POST",
+    url: "http://ec2-54-200-108-132.us-west-2.compute.amazonaws.com:5678/document",
+    data: {
+      "className": className,
+      "docText": docText
+    }
   }).done(function(result){
-   if(result.error){
-     return callback(result.error);
-   }else{
-     return callback(null, result);
-   }
+    console.log(result);
   });
 }
 
