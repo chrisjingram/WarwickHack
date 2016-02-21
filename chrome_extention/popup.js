@@ -7,8 +7,10 @@ function pasteSelection() {
     function(response){
       var pageForSelection = $('#with_selection');
       var pageForError = $('#without_selection');
+      var pageForSuccess = $('#completed');
       console.log(response);
       selection = response.data;
+      pageForSuccess.addClass("hidden");
       if (selection != "") {
       	pageForSelection.removeClass("hidden");
       	pageForError.addClass("hidden");
@@ -53,6 +55,12 @@ function submitData(className, docText) {
     }
   }).done(function(result){
     console.log(result);
+    var pageForSelection = $('#with_selection');
+    var pageForError = $('#without_selection');
+    var pageForSuccess = $('#completed');
+    pageForSuccess.removeClass("hidden");
+    pageForError.addClass("hidden");
+    pageForSelection.addClass("hidden");
   });
 }
 
