@@ -38,3 +38,6 @@ node_modules
 
 # Mongodb logs
 mongodb.log*
+
+# Build JS
+views/public/js/build.js
