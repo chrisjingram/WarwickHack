@@ -25,6 +25,12 @@ module.exports = mongoose.model(
     no: {
       type: Number,
       default: 0
+    },
+    yeses: {
+      type: [String]
+    },
+    nos: {
+      type: [String]
     }
   })
 );
