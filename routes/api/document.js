@@ -6,6 +6,7 @@ var documentDB = require("../../db/documentDB.js");
 router.post('/', function(req, res, next){
 	var classId = req.body.classId;
 	var docText = req.body.docText;
+  console.log(req.body);
 
 	documentDB.insert(classId, docText, function(err, result){
 		console.log("document.insert returned");

@@ -8,7 +8,7 @@ module.exports = mongoose.model(
       required: true
     },
     classId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true
     },
     randomNumber: {
