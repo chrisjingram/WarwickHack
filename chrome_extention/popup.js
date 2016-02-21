@@ -41,4 +41,5 @@ $('#classifier').on("input", function () {
 	updateDatalist();
 });
 
+updateDatalist();
 pasteSelection();
