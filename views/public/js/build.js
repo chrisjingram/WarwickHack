@@ -28780,21 +28780,26 @@ var api = require('./controllers/api.jsx');
 var App = React.createClass({displayName: "App",
 	getInitialState: function(){
 		return {
-			classId: null,
-			className: null
+			
 		}
 	},
 	componentDidMount: function(){
-		api.getFirstClassId(function(err, classy){
+		console.log('App componentDidMount');
+		this.serverRequest = api.getFirstClassId(function(err, data){
 			if(err) return console.log(err);
-			console.log(classy);
+			console.log("getFirstClassId", data);
 			this.setState({
-				classId: classy._id,
-				className: classy.name
+				classId: data._id,
+				className: data.name
 			})
+			
 		}.bind(this));
 	},
+	componentWillUnmount: function() {
+		this.serverRequest.abort();
+	},
 	render: function(){
+		console.log("render");
 		return (React.createElement(DocumentBox, {docText: "test", classId: this.state.classId, className: this.state.className})) // add classId prop
 	}
 });
@@ -28871,18 +28876,22 @@ var DocumentBox = React.createClass({displayName: "DocumentBox",
 	},
 	getDefaultProps: function(){
 		return {
-			classId: "56c87e22fd852b1159637be7",
-			className: "food"
+			classId: null,
+			className: "no classname provided"
 		}
 	},
 	newDoc: function(){
-		api.getRandomDoc(function(err,result){
-			if(err) return console.log(err);
-			this.setState({
-				docId: result.data._id,
-				docText: result.data.docText
-			});
-		}.bind(this))
+		if(this.state.classId){
+			api.getRandomDoc(this.state.classId, function(err,result){
+				if(err) return console.log(err);
+				console.log(result.data);
+				this.setState({
+					docId: result.data._id,
+					docText: result.data.docText
+				});
+			}.bind(this))
+		}
+		
 	},
 	handleYes: function(){
 		api.updateYes(this.state.docId, 'testuser', function(err, result){
@@ -28897,18 +28906,27 @@ var DocumentBox = React.createClass({displayName: "DocumentBox",
 		}.bind(this));
 	},
 	componentDidMount: function(){
-		this.newDoc();
-		// api.getClassName(this.props.classId, function(err, className){
-		// 	if(err) return console.log(err);
-		// 	this.setState({
-		// 		className: className
-		// 	})
-		// }.bind(this));
+		console.log("componentDidMount");
+		console.log(this.props);
+		// this.setState({
+		// 	classId: this.props.classId,
+		// 	className: this.props.className
+		// }, function(){
+		// 	this.newDoc();
+		// })
+	},
+	componentWillReceiveProps: function(nextProps) {
+	  this.setState({
+			classId: nextProps.classId,
+			className: nextProps.className
+		}, this.newDoc)
 	},
 	render: function(){
 		return (React.createElement("div", {className: "main container"}, 
-					React.createElement(ClassName, {name: this.props.className}), 
-					React.createElement(Document, {docText:  this.state.docText}), 
+					React.createElement("div", {className: "main-box"}, 
+						React.createElement(ClassName, {name: this.props.className}), 
+						React.createElement(Document, {docText:  this.state.docText})
+					), 
 					React.createElement("div", {className: "buttons"}, 
 						React.createElement("button", {className: "yesnobutton no", onClick: this.handleNo}, React.createElement("span", {className: "glyphicon glyphicon-remove", "aria-hidden": "true"})), 
 						React.createElement("button", {className: "yesnobutton yes", onClick: this.handleYes}, React.createElement("span", {className: "glyphicon glyphicon-ok", "aria-hidden": "true"}))
@@ -28922,9 +28940,9 @@ module.exports = DocumentBox;
 },{"./ChoiceButton.jsx":160,"./ClassName.jsx":161,"./Document.jsx":162,"./controllers/api.jsx":164,"react":158,"react-dom":2}],164:[function(require,module,exports){
 var jquery = require("jquery");
 
-module.exports.getRandomDoc = function(callback){
+module.exports.getRandomDoc = function(classId, callback){
 	// 56c87e22fd852b1159637be7 is food
-	jquery.get('/document/random/56c87e22fd852b1159637be7', function(result){
+	jquery.get('/document/random/' + classId, function(result){
 		if(result.error){
 			return callback(result.error);
 		}else{

@@ -16,18 +16,22 @@ var DocumentBox = React.createClass({
 	},
 	getDefaultProps: function(){
 		return {
-			classId: "56c87e22fd852b1159637be7",
-			className: "food"
+			classId: null,
+			className: "no classname provided"
 		}
 	},
 	newDoc: function(){
-		api.getRandomDoc(function(err,result){
-			if(err) return console.log(err);
-			this.setState({
-				docId: result.data._id,
-				docText: result.data.docText
-			});
-		}.bind(this))
+		if(this.state.classId){
+			api.getRandomDoc(this.state.classId, function(err,result){
+				if(err) return console.log(err);
+				console.log(result.data);
+				this.setState({
+					docId: result.data._id,
+					docText: result.data.docText
+				});
+			}.bind(this))
+		}
+		
 	},
 	handleYes: function(){
 		api.updateYes(this.state.docId, 'testuser', function(err, result){
@@ -42,18 +46,27 @@ var DocumentBox = React.createClass({
 		}.bind(this));
 	},
 	componentDidMount: function(){
-		this.newDoc();
-		// api.getClassName(this.props.classId, function(err, className){
-		// 	if(err) return console.log(err);
-		// 	this.setState({
-		// 		className: className
-		// 	})
-		// }.bind(this));
+		console.log("componentDidMount");
+		console.log(this.props);
+		// this.setState({
+		// 	classId: this.props.classId,
+		// 	className: this.props.className
+		// }, function(){
+		// 	this.newDoc();
+		// })
+	},
+	componentWillReceiveProps: function(nextProps) {
+	  this.setState({
+			classId: nextProps.classId,
+			className: nextProps.className
+		}, this.newDoc)
 	},
 	render: function(){
 		return (<div className="main container">
-					<ClassName name={this.props.className} />
-					<Document docText={ this.state.docText } />
+					<div className="main-box">
+						<ClassName name={this.props.className} />
+						<Document docText={ this.state.docText } />
+					</div>
 					<div className="buttons">
 						<button className="yesnobutton no" onClick={this.handleNo}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 						<button className="yesnobutton yes" onClick={this.handleYes}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
