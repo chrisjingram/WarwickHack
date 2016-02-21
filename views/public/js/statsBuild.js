@@ -28791,10 +28791,11 @@ module.exports.updateYes = function(docId, userId, callback){
 		type: "POST",
 		url: "/document/yes",
 		contentType: "application/json; charset=UTF-8",
-		data: {
+		data: JSON.stringify({
 			documentId: docId,
 			userId: userId
-		}
+		}),
+		dataType: 'json'
 		}).done(function(result){
 			if(result.error){
 				console.log(result.error);
@@ -28808,10 +28809,11 @@ module.exports.updateNo = function(docId, userId, callback){
 		type: "POST",
 		url: "/document/no",
 		contentType: "application/json; charset=UTF-8",
-		data: {
+		data: JSON.stringify({
 			documentId: docId,
 			userId: userId
-		}
+		}),
+		dataType: 'json'
 		}).done(function(result){
 			if(result.error){
 				console.log(result.error);
