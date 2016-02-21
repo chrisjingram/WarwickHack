@@ -24,7 +24,7 @@ function updateDatalist() {
 	console.log(input);
 	$.ajax({
 		method: "GET",
-		url: "http://188.166.154.40:5678/search/categories",
+		url: "http://ec2-54-200-108-132.us-west-2.compute.amazonaws.com:5678/search/categories",
 		headers: { query: input }
 	}).done(function( msg ) {
 		var results = msg;

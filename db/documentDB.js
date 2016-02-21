@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Document = require("./models/Document.js");
 
 module.exports.insert = function(classId, docText, callback){
-	var obj = { classId: classId, docText: docText };
+	var obj = { classified: false, classId: classId, docText: docText, yeses: [], nos: []};
 
 	Document.collection.ensureIndex({
 		randomNumber: 1
@@ -18,7 +18,7 @@ module.exports.insert = function(classId, docText, callback){
 		if(err) return callback("mongo error: " + err);
 		return callback(null,true);
 	});
-}
+};
 
 module.exports.random = function(classId, callback){
 
@@ -46,10 +46,44 @@ module.exports.random = function(classId, callback){
 
 	});
 
-}
+};
 
-module.exports.addYes = function(classId, documentId, callback){
+var percentYes = function(doc){
+  return doc.yeses/(doc.yeses+doc.nos);
+};
+var enoughClassifications = function(doc){
+  return (doc.yeses + doc.nos) >= 10;
+};
+
+module.exports.addYes = function(documentId, userId, callback){
 
 	// add 1 to yes
+  Document.findOneAndUpdate(
+      {_id: documentId},
+      {"yeses": {$addToSet: userId}},
+      {returnNewDocument: true},
+      function(err, doc){
+        if(err) cb(err);
+        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
+          console.log("new points");
+          callback(false);
+        }
+      }
+  );
+};
 
-}
+module.exports.addNo = function(documentId, userId, callback){
+
+  Document.findOneAndUpdate(
+      {_id: documentId},
+      {"nos": {$addToSet: userId}},
+      {returnNewDocument: true},
+      function(err, doc){
+        if(err) cb(err);
+        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
+          console.log("new points");
+          callback(false);
+        }
+      }
+  );
+};

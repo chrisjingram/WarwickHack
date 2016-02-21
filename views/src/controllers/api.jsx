@@ -20,11 +20,25 @@ module.exports.updateNo = function(docId, userId, callback){
 }
 
 module.exports.getClassName = function(classId, callback){
-	jquery.get('/class/id/' + classId, function(result){
+	var path = '/class/id/';
+	if(classId){
+		path = path + classId;
+	}
+	jquery.get(path, function(result){
 		if(result.error){
 			return callback(result.error);
 		}else{
 			return callback(null, result.data);
 		}
 	});
+}
+
+module.exports.getFirstClassId = function(callback){
+	jquery.get('/class/first', function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	})
 }
