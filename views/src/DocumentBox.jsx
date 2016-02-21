@@ -67,8 +67,10 @@ var DocumentBox = React.createClass({
 	},
 	render: function(){
 		return (<div className="main container" onSwipe={this.handleSwipe}>
-					<ClassName name={this.props.className} />
-					<Document docText={ this.state.docText } />
+					<div className="main-box">
+						<ClassName name={this.props.className} />
+						<Document docText={ this.state.docText } />
+					</div>
 					<div className="buttons">
 						<button className="yesnobutton no" onClick={this.handleNo}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 						<button className="yesnobutton yes" onClick={this.handleYes}><span className="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
