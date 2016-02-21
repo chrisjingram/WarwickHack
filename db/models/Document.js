@@ -7,10 +7,6 @@ module.exports = mongoose.model(
       type: String,
       required: true
     },
-    classId: {
-      type: String,
-      required: true
-    },
     randomNumber: {
       type: Number,
       default: function() {
@@ -35,6 +31,10 @@ module.exports = mongoose.model(
     classified: {
       type: Boolean,
       default: false
+    },
+    className: {
+      type: String,
+      required: true
     }
   })
 );

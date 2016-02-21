@@ -1,8 +1,10 @@
 var mongoose = require("mongoose");
 var Document = require("./models/Document.js");
 
-module.exports.insert = function(classId, docText, callback){
-	var obj = { classified: false, classId: classId, docText: docText, yeses: [], nos: []};
+module.exports.insert = function(className, docText, callback){
+  console.log(docText);
+  console.log(className);
+	var obj = { classified: false, className: className, docText: docText, yeses: [], nos: []};
 
 	Document.collection.ensureIndex({
 		randomNumber: 1
@@ -13,6 +15,7 @@ module.exports.insert = function(classId, docText, callback){
 	    }
 	    console.log('ensureIndex succeeded with response', res);
 	});
+  console.log(obj.docText);
 
 	Document.create(obj, function(err, result){
 		if(err) return callback("mongo error: " + err);
@@ -20,16 +23,16 @@ module.exports.insert = function(classId, docText, callback){
 	});
 };
 
-module.exports.random = function(classId, callback){
+module.exports.random = function(className, callback){
 
-	var random = Math.random()
+	var random = Math.random();
 	console.log(random);
 
 	var query = {
 		randomNumber: {$gte: random}
 	};
 
-	if(classId) query.classId = classId;
+	if(className) query.name = className;
 
 	Document.findOne(query, function(err, doc){
 		console.log(doc);
@@ -66,33 +69,39 @@ var enoughClassifications = function(doc){
 };
 
 module.exports.addYes = function(documentId, userId, callback){
+  documentId = mongoose.Types.ObjectId(documentId);
 
 	// add 1 to yes
   Document.findOneAndUpdate(
       {_id: documentId},
-      {"yeses": {$addToSet: userId}},
+      {$addToSet: {"yeses": userId}},
       {returnNewDocument: true},
       function(err, doc){
-        if(err) cb(err);
-        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
+        if(!err) callback({success:true});
+        else callback({success:false});
+        /*
+        if(err || !doc) callback(err);
+        else if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
           console.log("new points");
           callback(false);
         }
+        */
       }
   );
 };
 
 module.exports.addNo = function(documentId, userId, callback){
+  documentId = mongoose.Types.ObjectId(documentId);
 
   Document.findOneAndUpdate(
       {_id: documentId},
-      {"nos": {$addToSet: userId}},
+      {$addToSet: {"nos": userId}},
       {returnNewDocument: true},
       function(err, doc){
-        if(err) cb(err);
-        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
-          console.log("new points");
-          callback(false);
+        if(!err) {
+          callback({success: true});
+        } else {
+          callback({success:false});
         }
       }
   );
