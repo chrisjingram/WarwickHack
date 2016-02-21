@@ -1,3 +1,5 @@
+var selection = '';
+
 function pasteSelection() {
   chrome.tabs.query({active:true, windowId: chrome.windows.WINDOW_ID_CURRENT}, 
   function(tab) {
@@ -6,10 +8,11 @@ function pasteSelection() {
       var pageForSelection = $('#with_selection');
       var pageForError = $('#without_selection');
       console.log(response);
-      if (response.data != "") {
+      selection = response.data;
+      if (selection != "") {
       	pageForSelection.removeClass("hidden");
       	pageForError.addClass("hidden");
-      	$("#selection").text(response.data);
+      	$("#selection").text(selection);
       } else {
       	pageForSelection.addClass("hidden");
       	pageForError.removeClass("hidden");
@@ -27,14 +30,26 @@ function updateDatalist() {
 		url: "http://ec2-54-200-108-132.us-west-2.compute.amazonaws.com:5678/search/categories",
 		headers: { query: input }
 	}).done(function( msg ) {
-		var results = msg;
-		console.log(results);
-		var dataList = $('.suggestions');
+		var results = msg, dataList = $('.suggestions');
 		dataList.html("");
+    console.log(results);
 		for (var i = 0; i < results.length; i++) {
-			dataList.append("<div class='col-xs-3 col-sm-2'><button type='button' class='btn btn-primary'>" + results[i] + "</button></div>");
+			dataList.append("<div class='col-xs-3 col-sm-2'><button type='button' onClick=submitData(" + results[i] + ", " + selection + ") class='btn btn-primary'>" + results[i] + "</button></div>");
 		}
   	});
+}
+
+function submitData(className, docText) {
+  jquery.post('/document/', {
+   "className": className,
+   "docText": docText
+  }).done(function(result){
+   if(result.error){
+     return callback(result.error);
+   }else{
+     return callback(null, result);
+   }
+  });
 }
 
 $('#classifier').on("input", function () {
