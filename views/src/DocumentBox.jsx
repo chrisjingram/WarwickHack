@@ -2,7 +2,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Document = require('./Document.jsx');
-var ChoiceButton = require('./ChoiceButton.jsx');
 var ClassName = require('./ClassName.jsx');
 
 var api = require("./controllers/api.jsx");
