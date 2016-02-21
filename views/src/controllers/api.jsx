@@ -12,9 +12,7 @@ module.exports.getRandomDoc = function(classId, callback){
 }
 
 module.exports.updateYes = function(docId, userId, callback){
-
 	return callback(null, true);
-
 }
 
 module.exports.updateNo = function(docId, userId, callback){
