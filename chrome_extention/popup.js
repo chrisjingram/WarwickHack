@@ -12,7 +12,7 @@ function pasteSelection() {
       selection = response.data;
       pageForSuccess.addClass("hidden");
       if (selection != "") {
-      	pageForSelection.removeClass("hidden");
+        pageForSelection.removeClass("hidden");
       	pageForError.addClass("hidden");
       	$("#selection").text(selection);
       } else {
