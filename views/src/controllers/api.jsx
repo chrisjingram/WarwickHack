@@ -42,3 +42,25 @@ module.exports.getFirstClassId = function(callback){
 		}
 	})
 }
+
+module.exports.getClasses = function(callback){
+	jquery.get('/class/all', function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	})
+}
+
+module.exports.getDocumentsForClass = function(className, callback){
+	jquery.get('/document/all/' + className, function(result){
+		if(result.error){
+			return callback(result.error);
+		}else{
+			return callback(null, result.data);
+		}
+	})
+}
+
+

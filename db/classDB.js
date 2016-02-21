@@ -17,6 +17,13 @@ module.exports.find = function(name, callback){
 	})
 }
 
+module.exports.findAll = function(callback){
+	Class.find(function(err, classes){
+		if(err) return callback("mongo error: " + err);
+		return callback(null, classes);
+	})
+}
+
 module.exports.getClassName = function(classId, callback){
 	var obj = {}
 	if(classId){
