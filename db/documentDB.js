@@ -32,7 +32,11 @@ module.exports.random = function(className, callback){
 		randomNumber: {$gte: random}
 	};
 
-	if(className) query.name = className;
+	if(className != "null"){
+		query.className = className;
+	}
+
+	console.log("query", query);
 
 	Document.findOne(query, function(err, doc){
 		console.log(doc);

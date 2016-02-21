@@ -2,7 +2,9 @@ var jquery = require("jquery");
 
 module.exports.getRandomDoc = function(classId, callback){
 	// 56c87e22fd852b1159637be7 is food
+	console.log("className", classId);
 	jquery.get('/document/random/' + classId, function(result){
+		console.log(result);
 		if(result.error){
 			return callback(result.error);
 		}else{

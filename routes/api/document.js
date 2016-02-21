@@ -21,6 +21,8 @@ router.post('/', function(req, res, next){
 router.get('/random/:className?', function(req, res, next){
 
 	var className = req.params.className || null
+
+	console.log("random api call", className);
 	
 	documentDB.random(className, function(err, doc){
 		if(err) return res.status(500).json({error: err});
