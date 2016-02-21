@@ -62,7 +62,13 @@ module.exports.addYes = function(documentId, userId, callback){
       {_id: documentId},
       {"yeses": {$addToSet: userId}},
       {returnNewDocument: true},
-      callback
+      function(err, doc){
+        if(err) cb(err);
+        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
+          console.log("new points");
+          callback(false);
+        }
+      }
   );
 };
 
@@ -73,9 +79,10 @@ module.exports.addNo = function(documentId, userId, callback){
       {"nos": {$addToSet: userId}},
       {returnNewDocument: true},
       function(err, doc){
-        if(err) console.log(err);
-        if(percentYes(doc) > 0.8 && enoughClassifications(doc)){
+        if(err) cb(err);
+        if(percentYes(doc) > 0.8 && enoughClassifications(doc) && !doc.classified){
           console.log("new points");
+          callback(false);
         }
       }
   );
