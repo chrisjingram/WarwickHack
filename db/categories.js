@@ -7,7 +7,10 @@ module.exports = [
     "angry",
     "rant",
     "happy",
-    "sdfjsdjifsdijffodsdokfsdf",
     "food",
-    "sdkofsdfkfood"
+    "meme",
+    "leaving",
+    "sports",
+    "laughing",
+    "thanking"
 ];
