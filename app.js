@@ -2,22 +2,13 @@ var express = require("express");
 var path = require("path");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
+var helmet = require("helmet");
+var compress = require("compression");
 
 var app = express();
 
 app.use(helmet());
 app.use(compress());
-
-// PASSPORT
-app.use(require('express-session')({
-  secret: 'warwick',
-  resave: false,
-  saveUninitialized: false
-}));
-
-var passport = require('passport');
-app.use(passport.initialize());
-app.use(passport.session());
 
 require("./db/initMongo.js")(); // init db
 
