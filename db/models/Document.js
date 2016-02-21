@@ -31,6 +31,10 @@ module.exports = mongoose.model(
     },
     nos: {
       type: [String]
+    },
+    classified: {
+      type: Boolean,
+      default: false
     }
   })
 );
