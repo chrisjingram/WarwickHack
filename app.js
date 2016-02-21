@@ -55,7 +55,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(80, function(){
+app.listen(5678, function(){
   console.log("Listening on port 5678");
 });
 
