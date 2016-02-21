@@ -5,6 +5,20 @@ var bodyParser = require("body-parser");
 
 var app = express();
 
+app.use(helmet());
+app.use(compress());
+
+// PASSPORT
+app.use(require('express-session')({
+  secret: 'warwick',
+  resave: false,
+  saveUninitialized: false
+}));
+
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
 require("./db/initMongo.js")(); // init db
 
 app.use(logger("dev"));
