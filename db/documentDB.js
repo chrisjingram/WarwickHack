@@ -2,7 +2,8 @@ var mongoose = require("mongoose");
 var Document = require("./models/Document.js");
 
 module.exports.insert = function(classId, docText, callback){
-	var obj = { classified: false, classId: classId, docText: docText, yeses: [], nos: []};
+  console.log(docText);
+	var obj = { classified: false, classId: mongoose.Types.ObjectId(classId), docText: docText, yeses: [], nos: []};
 
 	Document.collection.ensureIndex({
 		randomNumber: 1
@@ -13,6 +14,7 @@ module.exports.insert = function(classId, docText, callback){
 	    }
 	    console.log('ensureIndex succeeded with response', res);
 	});
+  console.log(obj.docText);
 
 	Document.create(obj, function(err, result){
 		if(err) return callback("mongo error: " + err);
