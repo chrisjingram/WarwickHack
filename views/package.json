@@ -10,8 +10,9 @@
     "browserify": "^12.0.1",
     "jquery": "^2.2.0",
     "minimist": "^1.2.0",
-    "react": "^0.14.3",
+    "react": "^0.14.7",
     "react-dom": "^0.14.3",
+    "react-hammerjs": "^0.4.5",
     "reactify": "^1.1.1",
     "wzrd": "^1.3.1"
   },
