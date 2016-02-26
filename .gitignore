@@ -40,4 +40,4 @@ node_modules
 mongodb.log*
 
 # Build JS
-views/public/js/build.js
+views/public/js
